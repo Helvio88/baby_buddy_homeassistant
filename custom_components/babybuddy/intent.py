@@ -10,7 +10,12 @@ from typing import Any
 import voluptuous as vol
 import yaml
 
-from homeassistant.const import ATTR_DEVICE_CLASS, ATTR_ENTITY_ID, ATTR_NAME
+from homeassistant.const import (
+    ATTR_DEVICE_CLASS,
+    ATTR_ENTITY_ID,
+    ATTR_NAME,
+    ATTR_TEMPERATURE,
+)
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import config_validation as cv, entity_registry as er, intent
 
@@ -45,7 +50,6 @@ from .const import (
     ATTR_METHOD,
     ATTR_NAP,
     ATTR_NOTE,
-    ATTR_TEMPERATURE,
     ATTR_TYPE,
     ATTR_WEIGHT,
     DOMAIN,
@@ -275,8 +279,6 @@ class _ServiceIntentSpec:
     slot_mapping: dict[str, str]
     numeric_fields: frozenset[str] = frozenset()
     require_child: bool = True
-    required_fields: tuple[str, ...] = ()
-    missing_required_message: str | None = None
     extra_slots: Callable[[Mapping[str, Any]], dict[str, Any]] | None = None
 
 
@@ -469,8 +471,12 @@ class BabyBuddyServiceIntentHandler(intent.IntentHandler):
         """Initialize the handler from a spec."""
         self.intent_type = spec.intent_type
         self.description = spec.description
-        self.slot_schema = spec.slot_schema
         self._spec = spec
+
+    @property
+    def slot_schema(self) -> dict[Any, Any]:
+        """Return the slot schema for this action."""
+        return self._spec.slot_schema
 
     async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
         """Resolve slots and call the matching Baby Buddy action."""
