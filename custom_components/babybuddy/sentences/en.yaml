@@ -1,0 +1,229 @@
+language: "en"
+intents:
+  BabyBuddyAddDiaperChange:
+    data:
+      - sentences:
+          - "log [a] [{diaper_type:type}] [{diaper_color:color}] diaper [change] [for <child>]"
+          - "<child> had a [{diaper_type:type}] [{diaper_color:color}] diaper change"
+          - "log [a] diaper change [for <child>]"
+
+  BabyBuddyAddFeeding:
+    data:
+      - sentences:
+          - "log [a] [{feeding_type:type}] [{feeding_method:method}] feeding [for <child>]"
+          - "log [a] feeding [for <child>]"
+          - "<child> had a [{feeding_type:type}] [{feeding_method:method}] feeding"
+
+  BabyBuddyAddSleep:
+    data:
+      - sentences:
+          - "log [a] sleep [for <child>]"
+          - "log sleep [for <child>]"
+      - sentences:
+          - "log [a] nap [for <child>]"
+        slots:
+          nap: true
+
+  BabyBuddyAddTummyTime:
+    data:
+      - sentences:
+          - "log [a] tummy time [for <child>]"
+          - "<child> had tummy time"
+
+  BabyBuddyStartTimer:
+    data:
+      - sentences:
+          - "start [the] [baby] timer [for <child>]"
+          - "start <child> timer"
+
+  BabyBuddyAddBmi:
+    data:
+      - sentences:
+          - "log [a] bmi [of] {bmi} [for <child>]"
+
+  BabyBuddyAddWeight:
+    data:
+      - sentences:
+          - "log [a] weight [of] {weight} [for <child>]"
+
+  BabyBuddyAddHeight:
+    data:
+      - sentences:
+          - "log [a] height [of] {height} [for <child>]"
+
+  BabyBuddyAddHeadCircumference:
+    data:
+      - sentences:
+          - "log [a] head circumference [of] {head_circumference} [for <child>]"
+
+  BabyBuddyAddTemperature:
+    data:
+      - sentences:
+          - "log [a] temperature [of] {temperature} [for <child>]"
+
+  BabyBuddyAddMedication:
+    data:
+      - sentences:
+          - "log [a] medication {name} [for <child>]"
+          - "log medication {name} [of] {dosage} [{dosage_unit}] [for <child>]"
+
+  BabyBuddyAddNote:
+    data:
+      - sentences:
+          - "log [a] note {note} [for <child>]"
+          - "add [a] note {note} [for <child>]"
+
+  BabyBuddyAddPumping:
+    data:
+      - sentences:
+          - "log [a] pumping [of] {amount} [for <child>]"
+
+  BabyBuddyAddChild:
+    data:
+      - sentences:
+          - "add [a] [baby buddy] child {child_name} born {birth_date}"
+
+  BabyBuddyDeleteLastEntry:
+    data:
+      - sentences:
+          - "delete [the] last {entry_type} [for <child>]"
+          - "delete <child> last {entry_type}"
+
+lists:
+  child:
+    wildcard: true
+  bmi:
+    wildcard: true
+  weight:
+    wildcard: true
+  height:
+    wildcard: true
+  head_circumference:
+    wildcard: true
+  temperature:
+    wildcard: true
+  amount:
+    wildcard: true
+  dosage:
+    wildcard: true
+  name:
+    wildcard: true
+  note:
+    wildcard: true
+  child_name:
+    wildcard: true
+  birth_date:
+    wildcard: true
+  diaper_type:
+    values:
+      - in: "wet"
+        out: "Wet"
+      - in: "solid"
+        out: "Solid"
+      - in: "(wet and solid | mixed)"
+        out: "Wet and Solid"
+  feeding_type:
+    values:
+      - in: "(breast milk | breastmilk)"
+        out: "Breast milk"
+      - in: "formula"
+        out: "Formula"
+      - in: "(fortified breast milk | fortified breastmilk)"
+        out: "Fortified breast milk"
+      - in: "(solid food | solids)"
+        out: "Solid food"
+  feeding_method:
+    values:
+      - in: "bottle"
+        out: "Bottle"
+      - in: "(left breast | left)"
+        out: "Left breast"
+      - in: "(right breast | right)"
+        out: "Right breast"
+      - in: "(both breasts | both)"
+        out: "Both breasts"
+      - in: "(parent fed | parent-fed)"
+        out: "Parent fed"
+      - in: "(self fed | self-fed)"
+        out: "Self fed"
+  diaper_color:
+    values:
+      - in: "black"
+        out: "Black"
+      - in: "brown"
+        out: "Brown"
+      - in: "green"
+        out: "Green"
+      - in: "yellow"
+        out: "Yellow"
+  dosage_unit:
+    values:
+      - "mg"
+      - "ml"
+      - "tablets"
+      - "drops"
+  entry_type:
+    values:
+      - in: "bmi"
+        out: "bmi"
+      - in: "(diaper change | diaper | change)"
+        out: "diaper change"
+      - in: "feeding"
+        out: "feeding"
+      - in: "head circumference"
+        out: "head circumference"
+      - in: "height"
+        out: "height"
+      - in: "medication"
+        out: "medication"
+      - in: "(note | notes)"
+        out: "note"
+      - in: "pumping"
+        out: "pumping"
+      - in: "sleep"
+        out: "sleep"
+      - in: "temperature"
+        out: "temperature"
+      - in: "tummy time"
+        out: "tummy time"
+      - in: "weight"
+        out: "weight"
+
+expansion_rules:
+  child: "[the] {child}"
+
+skip_words:
+  - "please"
+
+responses:
+  intents:
+    BabyBuddyAddDiaperChange:
+      default: "Logged a diaper change"
+    BabyBuddyAddFeeding:
+      default: "Logged a feeding"
+    BabyBuddyAddSleep:
+      default: "Logged sleep"
+    BabyBuddyAddTummyTime:
+      default: "Logged tummy time"
+    BabyBuddyStartTimer:
+      default: "Started the timer"
+    BabyBuddyAddBmi:
+      default: "Logged BMI"
+    BabyBuddyAddWeight:
+      default: "Logged weight"
+    BabyBuddyAddHeight:
+      default: "Logged height"
+    BabyBuddyAddHeadCircumference:
+      default: "Logged head circumference"
+    BabyBuddyAddTemperature:
+      default: "Logged temperature"
+    BabyBuddyAddMedication:
+      default: "Logged medication"
+    BabyBuddyAddNote:
+      default: "Logged a note"
+    BabyBuddyAddPumping:
+      default: "Logged pumping"
+    BabyBuddyAddChild:
+      default: "Added the child"
+    BabyBuddyDeleteLastEntry:
+      default: "Deleted the last entry"

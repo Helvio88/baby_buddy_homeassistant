@@ -9,6 +9,7 @@ from homeassistant.helpers.typing import ConfigType
 
 from .const import CONFIG_FLOW_VERSION, DEFAULT_PATH, LOGGER, PLATFORMS
 from .coordinator import BabyBuddyConfigEntry, BabyBuddyCoordinator, BabyBuddyData
+from .intent import async_setup_intents
 from .services import async_setup_services
 
 
@@ -16,6 +17,7 @@ from .services import async_setup_services
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
     """Set up babybuddy."""
     async_setup_services(hass)
+    await async_setup_intents(hass)
     return True
 
 

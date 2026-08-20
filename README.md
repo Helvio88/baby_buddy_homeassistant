@@ -249,3 +249,7 @@ This service starts a new timer for specified child with optional starting time.
 | entity_id              |    no    | entity_id for the switch linked to the child                      |
 | start                  |   yes    | Specify start time (must be in the past, else now() will be used) |
 | name                   |   yes    | Optional name for new timer                                       |
+
+## Assist / voice
+
+Baby Buddy registers one Assist intent per existing action and ships English sentence templates in `custom_components/babybuddy/sentences/en.yaml`. Examples: "log a wet diaper", "log a feeding", "start the timer", "Arthur had a diaper change", "log sleep", "log tummy time", "delete the last feeding". If only one child exists the name can be omitted. User overrides belong in `config/custom_sentences/en/` and replace the shipped intent of the same name. These intents call the actions above; action IDs are unchanged.
